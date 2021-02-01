@@ -5,10 +5,13 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import common from '@/components/common/common.js'
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
+
+Vue.prototype.lib = common
 
 /* eslint-disable no-new */
 new Vue({
