@@ -48,9 +48,9 @@
         input: '',
         responseList: [],
         authForm: {
-          appid: '21967891',
-          appkey: '6vrWBXxGPCm08nDzfsjFdNd3',
-          dev_pid: '15372'
+          appid: '',
+          appkey: '',
+          dev_pid: ''
         },
         authRules: {
           appid: [{required: true, message: '请输入appid', trigger: 'blur'}],
