@@ -28,14 +28,15 @@
       </el-form>
     </el-row>
     <el-row>
-      <el-table :data="responseList" style="width: 100%" border>
-        <el-table-column prop="code" label="code" min-width="100">
-          <template slot-scope="scope"> {{ scope.row.code }}</template>
-        </el-table-column>
-        <el-table-column prop="message" label="内容" min-width="100">
-          <template slot-scope="scope"> {{ scope.row.message }}</template>
-        </el-table-column>
-      </el-table>
+      <textarea class="text-font" v-model="content" style="width: 100%" border readonly></textarea>
+      <!--      <el-table :data="responseList" style="width: 100%" border>-->
+      <!--        <el-table-column prop="code" label="code" min-width="100">-->
+      <!--          <template slot-scope="scope"> {{ scope.row.code }}</template>-->
+      <!--        </el-table-column>-->
+      <!--        <el-table-column prop="result" label="内容" min-width="100">-->
+      <!--          <template slot-scope="scope"> {{ scope.row.result }}</template>-->
+      <!--        </el-table-column>-->
+      <!--      </el-table>-->
     </el-row>
   </div>
 </template>
@@ -45,8 +46,8 @@
   export default {
     data() {
       return {
-        input: '',
-        responseList: [],
+        content: '',
+        // responseList: [],
         authForm: {
           appid: '',
           appkey: '',
@@ -99,14 +100,20 @@
       websocketOnMessage(e) {
         console.log(e.data)
         let message = JSON.parse(e.data)
-        if (message.code === 200 || message.code === 201 || message.code === 202) {
-          this.responseList.push(message)
-          // console.log(this.responseList)
+        if (message.code === 200) {
+          console.log(message)
         }
+        // 201 表示服务端开始调用识别
         if (message.code === 201) {
           this.lib.notificationInfo(this, "开始录音识别")
         }
+        // 202 表示服务端返回识别内容
         if (message.code === 202) {
+          this.content += message.result
+          // this.responseList.push(message)
+        }
+        // 203 表示服务端识别结束
+        if (message.code === 203) {
           this.lib.notificationInfo(this, "录音识别结束")
         }
       },
@@ -115,20 +122,13 @@
        * @param e
        */
       websocketOnOpen(e) {
-        // console.log(e)
         console.log("已连接")
         this.lib.notificationSuccess(this, "连接成功")
-        // let connectedMsg = {
-        //   code: 200,
-        //   msg: 'I am client'
-        // }
-        // this.sendWebSocketMsg(connectedMsg)
       },
       websocketOnError(e) {
         console.log(e)
       },
       websocketOnClose(e) {
-        // console.log(e)
         console.log("断开连接", e.code + " " + e.reason + " " + e.wasClean)
         this.lib.notificationInfo(this, "连接断开")
       },
@@ -138,7 +138,7 @@
       disconnectWs() {
         let disconnectMsg = {
           code: 888,
-          msg: 'I quit'
+          msg: 'client: I quit'
         }
         this.sendWebSocketMsg(disconnectMsg)
       },
@@ -153,25 +153,24 @@
             this.loading = true
             let startMsg = {
               code: 201,
-              msg: 'start',
-              appid: this.authForm.appid,
-              appkey: this.authForm.appkey,
-              dev_pid: this.authForm.dev_pid
+              msg: 'client: start baidu rasr',
+              auth: {
+                appid: this.authForm.appid,
+                appkey: this.authForm.appkey,
+                dev_pid: this.authForm.dev_pid
+              }
             }
-            // console.log(startMsg)
             this.sendWebSocketMsg(startMsg)
             this.loading = false
-            //   console.log(this.loginForm.username);
-            //   alert("submit!");
           } else {
             this.loading = false
-            // this.lib.notificationWarning(this, '登录失败')
+            this.lib.notificationWarning(this, '鉴权失败')
             return false
           }
         })
       },
       init() {
-      },
+      }
     },
   }
 </script>
@@ -192,5 +191,10 @@
     bottom: 0;
     right: 0;
     text-align: center;
+  }
+
+  .text-font {
+    font-size: 30px;
+    font-family: Calibri;
   }
 </style>

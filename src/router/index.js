@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Generator from "@/components/Generator";
+import Home from "@/components/Home"
+import BaiduGenerator from "@/components/BaiduGenerator"
+import XunfeiGenerator from "@/components/XunfeiGenerator"
+
 
 Vue.use(Router)
 
@@ -8,8 +11,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Generator',
-      component: Generator
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/baidu',
+      name: 'BaiduGenerator',
+      component: BaiduGenerator
+    },
+    {
+      path: '/xunfei',
+      name: 'XunfeiGenerator',
+      component: XunfeiGenerator
     }
   ]
 })
