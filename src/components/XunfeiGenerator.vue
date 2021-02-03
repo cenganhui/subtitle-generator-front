@@ -13,11 +13,11 @@
           <el-button type="primary" @click="createConnection()">连接服务端</el-button>
           <el-button type="primary" @click="disconnectWs()">断开服务端</el-button>
         </el-form-item>
-        <el-form-item label="appid" prop="appid">
-          <el-input v-model="authForm.appid"></el-input>
+        <el-form-item label="appId" prop="appId">
+          <el-input v-model="authForm.appId"></el-input>
         </el-form-item>
-        <el-form-item label="appkey" prop="appkey">
-          <el-input v-model="authForm.appkey"></el-input>
+        <el-form-item label="appKey" prop="appKey">
+          <el-input v-model="authForm.appKey"></el-input>
         </el-form-item>
         <el-form-item label="pd" prop="pd">
           <el-input v-model="authForm.pd"></el-input>
@@ -49,13 +49,13 @@
         content: '',
         responseList: [],
         authForm: {
-          appid: '',
-          appkey: '',
+          appId: '',
+          appKey: '',
           pd: ''
         },
         authRules: {
-          appid: [{required: true, message: '请输入appid', trigger: 'blur'}],
-          appkey: [{required: true, message: '请输入appkey', trigger: 'blur'}],
+          appId: [{required: true, message: '请输入appId', trigger: 'blur'}],
+          appKey: [{required: true, message: '请输入appKey', trigger: 'blur'}],
           pd: [{required: true, message: '请输入pd', trigger: 'blur'}]
         },
         loading: false
@@ -155,8 +155,8 @@
               code: 201,
               msg: 'client: start xunfei rasr',
               auth: {
-                appid: this.authForm.appid,
-                appkey: this.authForm.appkey,
+                app_id: this.authForm.appId,
+                app_key: this.authForm.appKey,
                 pd: this.authForm.pd
               }
             }

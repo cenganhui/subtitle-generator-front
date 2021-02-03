@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1 class="login-title">百度rasr</h1>
+    <h1 class="login-title">有道rasr</h1>
     <el-row>
       <el-form
         :model="authForm"
@@ -13,30 +13,22 @@
           <el-button type="primary" @click="createConnection()">连接服务端</el-button>
           <el-button type="primary" @click="disconnectWs()">断开服务端</el-button>
         </el-form-item>
-        <el-form-item label="appId" prop="appId">
-          <el-input v-model="authForm.appId"></el-input>
-        </el-form-item>
         <el-form-item label="appKey" prop="appKey">
           <el-input v-model="authForm.appKey"></el-input>
         </el-form-item>
-        <el-form-item label="devPid" prop="devPid">
-          <el-input v-model="authForm.devPid"></el-input>
+        <el-form-item label="appSecret" prop="appSecret">
+          <el-input v-model="authForm.appSecret"></el-input>
+        </el-form-item>
+        <el-form-item label="langType" prop="langType">
+          <el-input v-model="authForm.langType"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button :loading="loading" type="primary" @click="startBaiduRasr('authForm')">开始</el-button>
+          <el-button :loading="loading" type="primary" @click="startYoudaoRasr('authForm')">开始</el-button>
         </el-form-item>
       </el-form>
     </el-row>
     <el-row>
       <textarea class="text-font" v-model="content" style="width: 100%" border readonly></textarea>
-      <!--      <el-table :data="responseList" style="width: 100%" border>-->
-      <!--        <el-table-column prop="code" label="code" min-width="100">-->
-      <!--          <template slot-scope="scope"> {{ scope.row.code }}</template>-->
-      <!--        </el-table-column>-->
-      <!--        <el-table-column prop="result" label="内容" min-width="100">-->
-      <!--          <template slot-scope="scope"> {{ scope.row.result }}</template>-->
-      <!--        </el-table-column>-->
-      <!--      </el-table>-->
     </el-row>
   </div>
 </template>
@@ -47,16 +39,16 @@
     data() {
       return {
         content: '',
-        // responseList: [],
+        responseList: [],
         authForm: {
-          appId: '',
           appKey: '',
-          devPid: ''
+          appSecret: '',
+          langType: ''
         },
         authRules: {
-          appId: [{required: true, message: '请输入appId', trigger: 'blur'}],
           appKey: [{required: true, message: '请输入appKey', trigger: 'blur'}],
-          devPid: [{required: true, message: '请输入devPid', trigger: 'blur'}]
+          appSecret: [{required: true, message: '请输入appSecret', trigger: 'blur'}],
+          langType: [{required: true, message: '请输入langType', trigger: 'blur'}]
         },
         loading: false
       }
@@ -79,7 +71,7 @@
        */
       initWebSocket() {
         // 连接服务端
-        this.websock = new WebSocket("ws://127.0.0.1:8000/baidu-ws-channel/")
+        this.websock = new WebSocket("ws://127.0.0.1:8000/youdao-ws-channel/")
         // 指定事件回调
         this.websock.onmessage = this.websocketOnMessage
         this.websock.onopen = this.websocketOnOpen
@@ -143,23 +135,24 @@
         this.sendWebSocketMsg(disconnectMsg)
       },
       /**
-       * 发送开始百度语音识别消息
+       * 发送开始有道语音识别消息
        * @param authForm 鉴权信息
        */
-      startBaiduRasr(authForm) {
+      startYoudaoRasr(authForm) {
         // 判空
         this.$refs[authForm].validate((valid) => {
           if (valid) {
             this.loading = true
             let startMsg = {
               code: 201,
-              msg: 'client: start baidu rasr',
+              msg: 'client: start youdao rasr',
               auth: {
-                app_id: this.authForm.appId,
                 app_key: this.authForm.appKey,
-                dev_pid: this.authForm.devPid
+                app_secret: this.authForm.appSecret,
+                lang_type: this.authForm.langType
               }
             }
+            console.log(startMsg)
             this.sendWebSocketMsg(startMsg)
             this.loading = false
           } else {
@@ -170,8 +163,8 @@
         })
       },
       init() {
-      }
-    },
+      },
+    }
   }
 </script>
 

@@ -7,6 +7,9 @@
     <el-row style="margin-top: 30px">
       <el-button :loading="loading" type="primary" @click="toXunfeiGenerator()">讯飞rasr</el-button>
     </el-row>
+    <el-row style="margin-top: 30px">
+      <el-button :loading="loading" type="primary" @click="toYoudaoGenerator()">有道rasr</el-button>
+    </el-row>
   </div>
 </template>
 
@@ -35,6 +38,12 @@
        */
       toXunfeiGenerator() {
         this.$router.push({path: '/xunfei'})
+      },
+      /**
+       * 跳转到有道rasr页面
+       */
+      toYoudaoGenerator() {
+        this.$router.push({path: '/youdao'})
       }
     }
   }
