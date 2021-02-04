@@ -58,6 +58,7 @@
      */
     beforeDestroy() {
       this.disconnectWs()
+      clearInterval(this.timer)
     },
     created() {
       this.init()
@@ -101,11 +102,13 @@
         }
         // 202 表示服务端返回识别内容
         if (message.code === 202) {
-          this.content += message.result
+          this.content = message.result
           // this.responseList.push(message)
         }
         // 203 表示服务端识别结束
         if (message.code === 203) {
+          this.content = message.result
+          clearInterval(this.timer)
           this.lib.notificationInfo(this, "录音识别结束")
         }
       },
@@ -133,6 +136,7 @@
           msg: 'client: I quit'
         }
         this.sendWebSocketMsg(disconnectMsg)
+        clearInterval(this.timer)
       },
       /**
        * 发送开始有道语音识别消息
@@ -154,6 +158,8 @@
             }
             console.log(startMsg)
             this.sendWebSocketMsg(startMsg)
+            // 定时任务，每隔1s向服务端获取一次识别内容
+            this.timer = setInterval(this.getResult, 1000)
             this.loading = false
           } else {
             this.loading = false
@@ -161,6 +167,17 @@
             return false
           }
         })
+      },
+      /**
+       * 获取识别内容
+       */
+      getResult() {
+        let getMsg = {
+          code: 202,
+          msg: 'client: get result'
+        }
+        this.sendWebSocketMsg(getMsg)
+        console.log('get get')
       },
       init() {
       },
