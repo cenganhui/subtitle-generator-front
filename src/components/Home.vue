@@ -10,6 +10,9 @@
     <el-row style="margin-top: 30px">
       <el-button :loading="loading" type="primary" @click="toYoudaoGenerator()">有道rasr</el-button>
     </el-row>
+    <el-row style="margin-top: 30px">
+      <el-button :loading="loading" type="primary" @click="toTencentGenerator()">腾讯rasr</el-button>
+    </el-row>
   </div>
 </template>
 
@@ -44,6 +47,12 @@
        */
       toYoudaoGenerator() {
         this.$router.push({path: '/youdao'})
+      },
+      /**
+       * 跳转到腾讯rasr页面
+       */
+      toTencentGenerator() {
+        this.$router.push({path: '/tencent'})
       }
     }
   }

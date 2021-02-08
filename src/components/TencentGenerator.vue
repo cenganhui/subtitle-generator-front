@@ -2,7 +2,7 @@
   <div class="login">
     <el-row>
       <el-col :span="8">
-        <h1 class="login-title">讯飞rasr</h1>
+        <h1 class="login-title">腾讯rasr</h1>
         <el-form
           :model="authForm"
           :rules="authRules"
@@ -17,18 +17,21 @@
           <el-form-item label="appId" prop="appId">
             <el-input v-model="authForm.appId"></el-input>
           </el-form-item>
-          <el-form-item label="appKey" prop="appKey">
-            <el-input v-model="authForm.appKey"></el-input>
+          <el-form-item label="secretId" prop="secretId">
+            <el-input v-model="authForm.secretId"></el-input>
           </el-form-item>
-          <el-form-item label="pd" prop="pd">
-            <el-input v-model="authForm.pd"></el-input>
+          <el-form-item label="secretKey" prop="secretKey">
+            <el-input v-model="authForm.secretKey"></el-input>
+          </el-form-item>
+          <el-form-item label="engineModelType" prop="engineModelType">
+            <el-input v-model="authForm.engineModelType"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button :loading="loading" type="primary" @click="startXunfeiRasr('authForm')">开始</el-button>
+            <el-button :loading="loading" type="primary" @click="startTencentRasr('authForm')">开始</el-button>
           </el-form-item>
           <el-form-item>
             <el-link type="primary"
-                     href="https://www.xfyun.cn/doc/asr/rtasr/API.html">文档
+                     href="https://cloud.tencent.com/document/product/1093/48982#.E9.94.99.E8.AF.AF.E7.A0.81">文档
             </el-link>
           </el-form-item>
         </el-form>
@@ -49,13 +52,15 @@
         responseList: [],
         authForm: {
           appId: '',
-          appKey: '',
-          pd: ''
+          secretId: '',
+          secretKey: '',
+          engineModelType: '16k_zh'
         },
         authRules: {
           appId: [{required: true, message: '请输入appId', trigger: 'blur'}],
-          appKey: [{required: true, message: '请输入appKey', trigger: 'blur'}],
-          pd: [{required: true, message: '请输入pd', trigger: 'blur'}]
+          secretId: [{required: true, message: '请输入secretId', trigger: 'blur'}],
+          secretKey: [{required: true, message: '请输入secretKey', trigger: 'blur'}],
+          engineModelType: [{required: true, message: '请输入engineModelType', trigger: 'blur'}]
         },
         loading: false
       }
@@ -79,7 +84,7 @@
        */
       initWebSocket() {
         // 连接服务端
-        this.websock = new WebSocket("ws://127.0.0.1:8000/xunfei-ws-channel/")
+        this.websock = new WebSocket("ws://127.0.0.1:8000/tencent-ws-channel/")
         // 指定事件回调
         this.websock.onmessage = this.websocketOnMessage
         this.websock.onopen = this.websocketOnOpen
@@ -146,21 +151,22 @@
         clearInterval(this.timer)
       },
       /**
-       * 发送开始讯飞语音识别消息
+       * 发送开始腾讯语音识别消息
        * @param authForm 鉴权信息
        */
-      startXunfeiRasr(authForm) {
+      startTencentRasr(authForm) {
         // 判空
         this.$refs[authForm].validate((valid) => {
           if (valid) {
             this.loading = true
             let startMsg = {
               code: 201,
-              msg: 'client: start xunfei rasr',
+              msg: 'client: start tencent rasr',
               auth: {
                 app_id: this.authForm.appId,
-                app_key: this.authForm.appKey,
-                pd: this.authForm.pd
+                secret_id: this.authForm.secretId,
+                secret_key: this.authForm.secretKey,
+                engine_model_type: this.authForm.engineModelType
               }
             }
             console.log(startMsg)

@@ -4,6 +4,7 @@ import Home from "@/components/Home"
 import BaiduGenerator from "@/components/BaiduGenerator"
 import XunfeiGenerator from "@/components/XunfeiGenerator"
 import YoudaoGenerator from "@/components/YoudaoGenerator"
+import TencentGenerator from "@/components/TencentGenerator";
 
 
 Vue.use(Router)
@@ -29,6 +30,11 @@ export default new Router({
       path: '/youdao',
       name: 'YoudaoGenerator',
       component: YoudaoGenerator
+    },
+    {
+      path: '/tencent',
+      name: 'TencentGenerator',
+      component: TencentGenerator
     }
   ]
 })

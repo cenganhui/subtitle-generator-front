@@ -1,43 +1,52 @@
 <template>
   <div class="login">
-    <h1 class="login-title">百度rasr</h1>
     <el-row>
-      <el-form
-        :model="authForm"
-        :rules="authRules"
-        ref="authForm"
-        label-width="auto"
-        class="login-form"
-      >
-        <el-form-item>
-          <el-button type="primary" @click="createConnection()">连接服务端</el-button>
-          <el-button type="primary" @click="disconnectWs()">断开服务端</el-button>
-        </el-form-item>
-        <el-form-item label="appId" prop="appId">
-          <el-input v-model="authForm.appId"></el-input>
-        </el-form-item>
-        <el-form-item label="appKey" prop="appKey">
-          <el-input v-model="authForm.appKey"></el-input>
-        </el-form-item>
-        <el-form-item label="devPid" prop="devPid">
-          <el-input v-model="authForm.devPid"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button :loading="loading" type="primary" @click="startBaiduRasr('authForm')">开始</el-button>
-        </el-form-item>
-      </el-form>
+      <el-col :span="8">
+        <h1 class="login-title">百度rasr</h1>
+        <el-form
+          :model="authForm"
+          :rules="authRules"
+          ref="authForm"
+          label-width="auto"
+          class="login-form"
+        >
+          <el-form-item>
+            <el-button type="primary" @click="createConnection()">连接服务端</el-button>
+            <el-button type="primary" @click="disconnectWs()">断开服务端</el-button>
+          </el-form-item>
+          <el-form-item label="appId" prop="appId">
+            <el-input v-model="authForm.appId"></el-input>
+          </el-form-item>
+          <el-form-item label="appKey" prop="appKey">
+            <el-input v-model="authForm.appKey"></el-input>
+          </el-form-item>
+          <el-form-item label="devPid" prop="devPid">
+            <el-input v-model="authForm.devPid"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button :loading="loading" type="primary" @click="startBaiduRasr('authForm')">开始</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-link type="primary"
+                     href="https://ai.baidu.com/ai-doc/SPEECH/2k5dllqxj">文档
+            </el-link>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <el-col :span="16">
+        <textarea class="text-font" v-model="content" style="width: 80%; height: 500px" border readonly></textarea>
+      </el-col>
     </el-row>
-    <el-row>
-      <textarea class="text-font" v-model="content" style="width: 100%" border readonly></textarea>
-      <!--      <el-table :data="responseList" style="width: 100%" border>-->
-      <!--        <el-table-column prop="code" label="code" min-width="100">-->
-      <!--          <template slot-scope="scope"> {{ scope.row.code }}</template>-->
-      <!--        </el-table-column>-->
-      <!--        <el-table-column prop="result" label="内容" min-width="100">-->
-      <!--          <template slot-scope="scope"> {{ scope.row.result }}</template>-->
-      <!--        </el-table-column>-->
-      <!--      </el-table>-->
-    </el-row>
+    <!--    <el-row>-->
+    <!--      <el-table :data="responseList" style="width: 100%" border>-->
+    <!--        <el-table-column prop="code" label="code" min-width="100">-->
+    <!--          <template slot-scope="scope"> {{ scope.row.code }}</template>-->
+    <!--        </el-table-column>-->
+    <!--        <el-table-column prop="result" label="内容" min-width="100">-->
+    <!--          <template slot-scope="scope"> {{ scope.row.result }}</template>-->
+    <!--        </el-table-column>-->
+    <!--      </el-table>-->
+    <!--    </el-row>-->
   </div>
 </template>
 

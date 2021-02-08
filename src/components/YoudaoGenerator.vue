@@ -1,34 +1,42 @@
 <template>
   <div class="login">
-    <h1 class="login-title">有道rasr</h1>
     <el-row>
-      <el-form
-        :model="authForm"
-        :rules="authRules"
-        ref="authForm"
-        label-width="auto"
-        class="login-form"
-      >
-        <el-form-item>
-          <el-button type="primary" @click="createConnection()">连接服务端</el-button>
-          <el-button type="primary" @click="disconnectWs()">断开服务端</el-button>
-        </el-form-item>
-        <el-form-item label="appKey" prop="appKey">
-          <el-input v-model="authForm.appKey"></el-input>
-        </el-form-item>
-        <el-form-item label="appSecret" prop="appSecret">
-          <el-input v-model="authForm.appSecret"></el-input>
-        </el-form-item>
-        <el-form-item label="langType" prop="langType">
-          <el-input v-model="authForm.langType"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button :loading="loading" type="primary" @click="startYoudaoRasr('authForm')">开始</el-button>
-        </el-form-item>
-      </el-form>
-    </el-row>
-    <el-row>
-      <textarea class="text-font" v-model="content" style="width: 100%" border readonly></textarea>
+      <el-col :span="8">
+        <h1 class="login-title">有道rasr</h1>
+        <el-form
+          :model="authForm"
+          :rules="authRules"
+          ref="authForm"
+          label-width="auto"
+          class="login-form"
+        >
+          <el-form-item>
+            <el-button type="primary" @click="createConnection()">连接服务端</el-button>
+            <el-button type="primary" @click="disconnectWs()">断开服务端</el-button>
+          </el-form-item>
+          <el-form-item label="appKey" prop="appKey">
+            <el-input v-model="authForm.appKey"></el-input>
+          </el-form-item>
+          <el-form-item label="appSecret" prop="appSecret">
+            <el-input v-model="authForm.appSecret"></el-input>
+          </el-form-item>
+          <el-form-item label="langType" prop="langType">
+            <el-input v-model="authForm.langType"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button :loading="loading" type="primary" @click="startYoudaoRasr('authForm')">开始</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-link type="primary"
+                     href="http://ai.youdao.com/DOCSIRMA/html/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%ABASR/API%E6%96%87%E6%A1%A3/%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%9C%8D%E5%8A%A1/%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%9C%8D%E5%8A%A1-API%E6%96%87%E6%A1%A3.html">
+              文档
+            </el-link>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <el-col :span="16">
+        <textarea class="text-font" v-model="content" style="width: 80%; height: 500px" border readonly></textarea>
+      </el-col>
     </el-row>
   </div>
 </template>
