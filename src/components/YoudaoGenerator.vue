@@ -21,7 +21,15 @@
             <el-input v-model="authForm.appSecret"></el-input>
           </el-form-item>
           <el-form-item label="langType" prop="langType">
-            <el-input v-model="authForm.langType"></el-input>
+            <el-select v-model="authForm.langType" placeholder="请选择" style="width: 100%">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            <!--            <el-input v-model="authForm.langType"></el-input>-->
           </el-form-item>
           <el-form-item>
             <el-button :loading="loading" type="primary" @click="startYoudaoRasr('authForm')">开始</el-button>
@@ -30,6 +38,9 @@
             <el-link type="primary"
                      href="http://ai.youdao.com/DOCSIRMA/html/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%ABASR/API%E6%96%87%E6%A1%A3/%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%9C%8D%E5%8A%A1/%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%9C%8D%E5%8A%A1-API%E6%96%87%E6%A1%A3.html">
               文档
+            </el-link>
+            <el-link type="primary"
+                     href="http://ai.youdao.com/index.s" style="margin-left: 50px">控制台
             </el-link>
           </el-form-item>
         </el-form>
@@ -51,8 +62,23 @@
         authForm: {
           appKey: '',
           appSecret: '',
-          langType: ''
+          langType: 'zh-CHS'
         },
+        options: [
+          {
+            label: '中文、普通话(简体、中国)',
+            value: 'zh-CHS'
+          }, {
+            label: '中文、粤语(繁体、香港)',
+            value: 'yue'
+          }, {
+            label: '英语(美国)',
+            value: 'en'
+          }, {
+            label: '日本(日本)',
+            value: 'jp'
+          }
+        ],
         authRules: {
           appKey: [{required: true, message: '请输入appKey', trigger: 'blur'}],
           appSecret: [{required: true, message: '请输入appSecret', trigger: 'blur'}],

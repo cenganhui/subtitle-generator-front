@@ -24,7 +24,15 @@
             <el-input v-model="authForm.secretKey"></el-input>
           </el-form-item>
           <el-form-item label="engineModelType" prop="engineModelType">
-            <el-input v-model="authForm.engineModelType"></el-input>
+            <el-select v-model="authForm.engineModelType" placeholder="请选择" style="width: 100%">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            <!--            <el-input v-model="authForm.engineModelType"></el-input>-->
           </el-form-item>
           <el-form-item>
             <el-button :loading="loading" type="primary" @click="startTencentRasr('authForm')">开始</el-button>
@@ -32,6 +40,9 @@
           <el-form-item>
             <el-link type="primary"
                      href="https://cloud.tencent.com/document/product/1093/48982#.E9.94.99.E8.AF.AF.E7.A0.81">文档
+            </el-link>
+            <el-link type="primary"
+                     href="https://console.cloud.tencent.com/" style="margin-left: 50px">控制台
             </el-link>
           </el-form-item>
         </el-form>
@@ -56,6 +67,30 @@
           secretKey: '',
           engineModelType: '16k_zh'
         },
+        options: [
+          {
+            label: '16k 中文普通话通用',
+            value: '16k_zh'
+          }, {
+            label: '16k 粤语',
+            value: '16k_ca'
+          }, {
+            label: '16k 英语',
+            value: '16k_en'
+          }, {
+            label: '16k 日语',
+            value: '16k_ja'
+          }, {
+            label: '医疗',
+            value: '16k_zh_medical'
+          }, {
+            label: '中文教育',
+            value: '16k_zh_edu'
+          }, {
+            label: '英文教育',
+            value: '16k_en_edu'
+          }
+        ],
         authRules: {
           appId: [{required: true, message: '请输入appId', trigger: 'blur'}],
           secretId: [{required: true, message: '请输入secretId', trigger: 'blur'}],

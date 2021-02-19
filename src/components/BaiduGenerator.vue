@@ -30,6 +30,9 @@
             <el-link type="primary"
                      href="https://ai.baidu.com/ai-doc/SPEECH/2k5dllqxj">文档
             </el-link>
+            <el-link type="primary"
+                     href="https://login.bce.baidu.com/?account=" style="margin-left: 50px">控制台
+            </el-link>
           </el-form-item>
         </el-form>
       </el-col>

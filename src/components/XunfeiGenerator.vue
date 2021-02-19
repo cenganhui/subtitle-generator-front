@@ -21,7 +21,15 @@
             <el-input v-model="authForm.appKey"></el-input>
           </el-form-item>
           <el-form-item label="pd" prop="pd">
-            <el-input v-model="authForm.pd"></el-input>
+            <el-select v-model="authForm.pd" placeholder="请选择" style="width: 100%">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            <!--            <el-input v-model="authForm.pd"></el-input>-->
           </el-form-item>
           <el-form-item>
             <el-button :loading="loading" type="primary" @click="startXunfeiRasr('authForm')">开始</el-button>
@@ -29,6 +37,9 @@
           <el-form-item>
             <el-link type="primary"
                      href="https://www.xfyun.cn/doc/asr/rtasr/API.html">文档
+            </el-link>
+            <el-link type="primary"
+                     href="https://console.xfyun.cn/app/myapp" style="margin-left: 50px">控制台
             </el-link>
           </el-form-item>
         </el-form>
@@ -50,8 +61,26 @@
         authForm: {
           appId: '',
           appKey: '',
-          pd: ''
+          pd: 'edu'
         },
+        options: [
+          {
+            label: '法院court',
+            value: 'court'
+          }, {
+            label: '教育edu',
+            value: 'edu'
+          }, {
+            label: '金融finance',
+            value: 'finance'
+          }, {
+            label: '医疗medical',
+            value: 'medical'
+          }, {
+            label: '科技tech',
+            value: 'tech'
+          }
+        ],
         authRules: {
           appId: [{required: true, message: '请输入appId', trigger: 'blur'}],
           appKey: [{required: true, message: '请输入appKey', trigger: 'blur'}],
